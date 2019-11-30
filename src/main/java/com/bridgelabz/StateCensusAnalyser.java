@@ -4,9 +4,11 @@ import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
 
@@ -15,7 +17,7 @@ public class StateCensusAnalyser {
     private static final String SAMPLE_CSV_STATE_CENSUS_DATA_PATH = "/home/admin141/IdeaProjects/IndianStatesCensusAnalyser/src/main/resources/StateCensusData.csv";
     private static int count = 0;
 
-    public static int findStateCount() {
+    public static String findStateCount(int expected) throws StateCensusAnalyserException {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_STATE_CENSUS_DATA_PATH));
             CsvToBean<CSVState> csvToBean = new CsvToBeanBuilder(reader)
@@ -34,9 +36,17 @@ public class StateCensusAnalyser {
                 System.out.println("==========================");
                 count++;
             }
+
+            if (expected == count)
+                return "HAPPY";
+            else
+                return "SAD";
+        } catch (NoSuchFileException e) {
+            throw new StateCensusAnalyserException("Please Valid File");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return count;
+
+        return null;
     }
 }
