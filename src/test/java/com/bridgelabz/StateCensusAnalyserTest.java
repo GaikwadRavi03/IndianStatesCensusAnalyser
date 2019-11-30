@@ -42,4 +42,14 @@ public class StateCensusAnalyserTest {
         String result = StateCensusAnalyser.findStateCount(29);
         Assert.assertEquals("HAPPY", result);
     }
+
+    @Test
+    public void givenTheStateCSV_FileWhenCorrectBut_csvHeaderIncorrect_ReturnsCustomException()  {
+        String result = null;
+        try {
+            result = StateCensusAnalyser.findStateCount(29);
+        } catch (StateCensusAnalyserException e) {
+            Assert.assertEquals("Please Enter Valid File path", e.getMessage());
+        }
+    }
 }
