@@ -18,7 +18,6 @@ public class StateCensusAnalyserTest {
 
     @Test
     public void givenStateCSV_FileIf_IncorrectReturns_CustomException() {
-
         try {
             String result = StateCensusAnalyser.findStateCount(29);
         } catch (StateCensusAnalyserException e) {
@@ -55,7 +54,22 @@ public class StateCensusAnalyserTest {
 
     @Test
     public void givenTheStatesCode_CSV_fileCheckToEnsure_TheNumberOfRecord_matches() {
-        String result = StateCensusAnalyser.findStateCodeCount(37);
+        String result = null;
+        try {
+            result = StateCensusAnalyser.findStateCodeCount(37);
+        } catch (StateCensusAnalyserException e) {
+            e.printStackTrace();
+        }
         Assert.assertEquals("HAPPY", result);
+    }
+
+    @Test
+    public void givenStateCodeCSV_FileIf_IncorrectReturns_CustomException() {
+        String result = null;
+        try {
+            result = StateCensusAnalyser.findStateCodeCount(37);
+        } catch (StateCensusAnalyserException e) {
+            Assert.assertEquals("Please Enter Valid File", e.getMessage());
+        }
     }
 }
