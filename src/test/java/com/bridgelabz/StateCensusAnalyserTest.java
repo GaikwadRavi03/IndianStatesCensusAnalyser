@@ -57,10 +57,10 @@ public class StateCensusAnalyserTest {
         String result = null;
         try {
             result = StateCensusAnalyser.findStateCodeCount(37);
+            Assert.assertEquals("HAPPY", result);
         } catch (StateCensusAnalyserException e) {
             e.printStackTrace();
         }
-        Assert.assertEquals("HAPPY", result);
     }
 
     @Test
@@ -80,7 +80,15 @@ public class StateCensusAnalyserTest {
             result = StateCensusAnalyser.findStateCodeCount(37);
             Assert.assertEquals("HAPPY", result);
         } catch (StateCensusAnalyserException e) {
-            //Assert.assertEquals(StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE, e.type);
+        }
+    }
+
+    @Test
+    public void givenTheStateCode_CSVFileWhenCorrectBut_DelimiterIncorrect_ReturnsCustomException() {
+        try {
+            String result = StateCensusAnalyser.findStateCodeCount(37);
+        } catch (StateCensusAnalyserException e) {
+            Assert.assertEquals(StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE, e.type);
         }
     }
 }

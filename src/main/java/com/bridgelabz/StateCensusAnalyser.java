@@ -54,7 +54,7 @@ public class StateCensusAnalyser {
 
     public static String findStateCodeCount(int expected) throws StateCensusAnalyserException {
         try {
-            Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_STATE_CENSUS_DATA_PATH));
+            Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_STATE_CODE_PATH));
 
             CsvToBean<CSVStateCode> csvToBean = new CsvToBeanBuilder(reader)
                     .withType(CSVStateCode.class)
@@ -75,9 +75,12 @@ public class StateCensusAnalyser {
             throw new StateCensusAnalyserException("Please Enter Valid File");
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (RuntimeException e) {
-            throw new StateCensusAnalyserException("Please Enter Valid File", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
+        } catch (NullPointerException e){
+            throw new StateCensusAnalyserException("delimiter", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
         }
+//        catch (RuntimeException e) {
+//            throw new StateCensusAnalyserException("Please Enter Valid File", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
+//        }
         return null;
     }
 }
