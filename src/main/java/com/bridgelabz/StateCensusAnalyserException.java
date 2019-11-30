@@ -17,4 +17,9 @@ public class StateCensusAnalyserException extends Throwable {
         super(message);
         this.message = message;
     }
+
+    public StateCensusAnalyserException(String message, ExceptionType type) {
+        super(message);
+        this.type = type;
+    }
 }

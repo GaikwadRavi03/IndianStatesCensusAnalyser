@@ -23,7 +23,18 @@ public class StateCensusAnalyserTest {
             String result = StateCensusAnalyser.findStateCount(29);
             Assert.assertEquals("HAPPY", result);
         } catch (StateCensusAnalyserException e) {
-            Assert.assertEquals("Please Valid File", e.getMessage());
+            Assert.assertEquals("Please Enter Valid File", e.getMessage());
+        }
+    }
+
+    @Test
+    public void givenTheState_CSVFileWhenCorrectBut_TypeIncorrect_ReturnsCustomException() {
+        String result = null;
+        try {
+            result = StateCensusAnalyser.findStateCount(29);
+            //Assert.assertEquals("HAPPY", result);
+        } catch (StateCensusAnalyserException e) {
+            Assert.assertEquals(StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE, e.type);
         }
     }
 }

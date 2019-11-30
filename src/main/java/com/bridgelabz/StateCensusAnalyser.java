@@ -3,6 +3,7 @@ package com.bridgelabz;
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import sun.security.krb5.internal.crypto.EType;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class StateCensusAnalyser {
 
     public static String findStateCount(int expected) throws StateCensusAnalyserException {
         try {
-            Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_STATE_CENSUS_DATA_PATH));
+            Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_STATE_CODE_PATH));
             CsvToBean<CSVState> csvToBean = new CsvToBeanBuilder(reader)
                     .withType(CSVState.class)
                     .withIgnoreLeadingWhiteSpace(true)
@@ -42,11 +43,16 @@ public class StateCensusAnalyser {
             else
                 return "SAD";
         } catch (NoSuchFileException e) {
-            throw new StateCensusAnalyserException("Please Valid File");
+            throw new StateCensusAnalyserException("Please Enter Valid File");
+        } catch (NullPointerException e) {
+            throw new StateCensusAnalyserException("Please Enter Valid file path", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
+        } catch (RuntimeException e) {
+            throw new StateCensusAnalyserException("Please Enter Valid File path", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
         return null;
     }
 }
