@@ -44,7 +44,7 @@ public class StateCensusAnalyserTest {
     }
 
     @Test
-    public void givenTheStateCSV_FileWhenCorrectBut_csvHeaderIncorrect_ReturnsCustomException()  {
+    public void givenTheStateCSV_FileWhenCorrectBut_csv_HeaderIncorrect_ReturnsCustomException()  {
         String result = null;
         try {
             result = StateCensusAnalyser.findStateCount(29);
