@@ -20,7 +20,7 @@ public class StateCensusAnalyser {
 
     public static String findStateCount(int expected) throws StateCensusAnalyserException {
         try {
-            Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_STATE_CODE_PATH));
+            Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_STATE_CENSUS_DATA_PATH));
             CsvToBean<CSVState> csvToBean = new CsvToBeanBuilder(reader)
                     .withType(CSVState.class)
                     .withIgnoreLeadingWhiteSpace(true)
@@ -44,14 +44,12 @@ public class StateCensusAnalyser {
                 return "SAD";
         } catch (NoSuchFileException e) {
             throw new StateCensusAnalyserException("Please Enter Valid File");
-        } catch (NullPointerException e) {
-            throw new StateCensusAnalyserException("Please Enter Valid file path", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
-        } catch (RuntimeException e) {
-            throw new StateCensusAnalyserException("Please Enter Valid File path", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             e.printStackTrace();
+        } catch (RuntimeException e) {
+            throw new StateCensusAnalyserException("Please Enter Valid File path", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
         }
         return null;
     }

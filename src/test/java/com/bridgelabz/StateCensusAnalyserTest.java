@@ -17,11 +17,10 @@ public class StateCensusAnalyserTest {
     }
 
     @Test
-    public void givenStateCSV_FileIfIncorrectReturns_CustomException() {
+    public void givenStateCSV_FileIf_IncorrectReturns_CustomException() {
 
         try {
             String result = StateCensusAnalyser.findStateCount(29);
-            Assert.assertEquals("HAPPY", result);
         } catch (StateCensusAnalyserException e) {
             Assert.assertEquals("Please Enter Valid File", e.getMessage());
         }
@@ -32,9 +31,15 @@ public class StateCensusAnalyserTest {
         String result = null;
         try {
             result = StateCensusAnalyser.findStateCount(29);
-            //Assert.assertEquals("HAPPY", result);
+            Assert.assertEquals("HAPPY", result);
         } catch (StateCensusAnalyserException e) {
-            Assert.assertEquals(StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE, e.type);
+            //Assert.assertEquals(StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE, e.type);
         }
+    }
+
+    @Test
+    public void givenTheState_CSVFileWhenCorrectBut_DelimiterIncorrect_ReturnsCustomException() throws StateCensusAnalyserException {
+        String result = StateCensusAnalyser.findStateCount(29);
+        Assert.assertEquals("HAPPY", result);
     }
 }
