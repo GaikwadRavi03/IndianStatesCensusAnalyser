@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 
 public class StateCensusAnalyser {
-    private static final String SAMPLE_CSV_STATE_CODE_PATH = "/home/admin141/IdeaProjects/IndianStatesCensusAnalyser/src/main/resources/StateCode1.csv";
+    private static final String SAMPLE_CSV_STATE_CODE_PATH = "/home/admin141/IdeaProjects/IndianStatesCensusAnalyser/src/main/resources/StateCode.csv";
     private static final String SAMPLE_CSV_STATE_CENSUS_DATA_PATH = "/home/admin141/IdeaProjects/IndianStatesCensusAnalyser/src/main/resources/StateCensusData.csv";
     private static int count = 0;
 
@@ -54,7 +54,7 @@ public class StateCensusAnalyser {
 
     public static String findStateCodeCount(int expected) throws StateCensusAnalyserException {
         try {
-            Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_STATE_CODE_PATH));
+            Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_STATE_CENSUS_DATA_PATH));
 
             CsvToBean<CSVStateCode> csvToBean = new CsvToBeanBuilder(reader)
                     .withType(CSVStateCode.class)
@@ -75,6 +75,8 @@ public class StateCensusAnalyser {
             throw new StateCensusAnalyserException("Please Enter Valid File");
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (RuntimeException e) {
+            throw new StateCensusAnalyserException("Please Enter Valid File", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
         }
         return null;
     }

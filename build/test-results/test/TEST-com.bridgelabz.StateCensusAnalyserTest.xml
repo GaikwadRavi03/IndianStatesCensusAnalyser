@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.bridgelabz.StateCensusAnalyserTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-11-30T21:41:23" hostname="admin141-desktop" time="0.004">
+<testsuite name="com.bridgelabz.StateCensusAnalyserTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-11-30T21:50:32" hostname="admin141-desktop" time="0.042">
   <properties/>
-  <testcase name="givenStateCodeCSV_FileIf_IncorrectReturns_CustomException" classname="com.bridgelabz.StateCensusAnalyserTest" time="0.004"/>
+  <testcase name="givenTheStateCode_CSVFileWhenCorrectBut_TypeIncorrect_ReturnsCustomException" classname="com.bridgelabz.StateCensusAnalyserTest" time="0.042"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
