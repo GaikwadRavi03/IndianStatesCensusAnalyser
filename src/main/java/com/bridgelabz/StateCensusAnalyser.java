@@ -18,20 +18,15 @@ public class StateCensusAnalyser {
     public static String findStateCount(int expected) throws StateCensusAnalyserException {
         try {
             Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_STATE_CENSUS_DATA_PATH));
-            CsvToBean<CSVState> csvToBean = new CsvToBeanBuilder(reader)
-                    .withType(CSVState.class)
+            CsvToBean<CSVStateCensus> csvToBean = new CsvToBeanBuilder(reader)
+                    .withType(CSVStateCensus.class)
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();
 
-            Iterator<CSVState> csvStateIterator = csvToBean.iterator();
+            Iterator<CSVStateCensus> csvStateIterator = csvToBean.iterator();
 
             while (csvStateIterator.hasNext()) {
-                CSVState csvState = csvStateIterator.next();
-                System.out.println("State : " + csvState.getState());
-                System.out.println("Population : " + csvState.getPopulation());
-                System.out.println("AreaInSqKm : " + csvState.getAreaInSqKm());
-                System.out.println("DensityPerSqKm : " + csvState.getDensityPerSqKm());
-                System.out.println("==========================");
+                CSVStateCensus csvState = csvStateIterator.next();
                 count++;
             }
 
@@ -78,9 +73,10 @@ public class StateCensusAnalyser {
         } catch (NullPointerException e){
             throw new StateCensusAnalyserException("delimiter", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
         }
-//        catch (RuntimeException e) {
-//            throw new StateCensusAnalyserException("Please Enter Valid File", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
-//        }
+        catch (RuntimeException e) {
+            throw new StateCensusAnalyserException("Please Enter Valid File", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
+        }
         return null;
     }
+}
 }

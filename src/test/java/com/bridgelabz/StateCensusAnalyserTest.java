@@ -91,4 +91,14 @@ public class StateCensusAnalyserTest {
             Assert.assertEquals(StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE, e.type);
         }
     }
+
+    @Test
+    public void givenTheStateCodeCSV_FileWhenCorrectBut_csv_HeaderIncorrect_ReturnsCustomException() {
+        String result = null;
+        try {
+            result = StateCensusAnalyser.findStateCodeCount(37);
+        } catch (StateCensusAnalyserException e) {
+            Assert.assertEquals("Please Enter Valid File", e.getMessage());
+        }
+    }
 }
