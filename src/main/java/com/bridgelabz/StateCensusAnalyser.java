@@ -11,17 +11,11 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 
 public class StateCensusAnalyser {
-    private static final String SAMPLE_CSV_STATE_CODE_PATH = "/home/admin141/IdeaProjects/IndianStatesCensusAnalyser/src/main/resources/StateCode.csv";
-    private static final String SAMPLE_CSV_STATE_CENSUS_DATA_PATH = "/home/admin141/IdeaProjects/IndianStatesCensusAnalyser/src/main/resources/StateCensusData.csv";
     private static int count = 0;
 
-    public static String findStateCount(int expected) throws StateCensusAnalyserException {
+    public static String findStateCount(int expected, String CSV_PATH_NAME, String className) throws StateCensusAnalyserException {
         try {
-            Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_STATE_CENSUS_DATA_PATH));
-            CsvToBean<CSVStateCensus> csvToBean = new CsvToBeanBuilder(reader)
-                    .withType(CSVStateCensus.class)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .build();
+            CsvToBean<CSVStateCensus> csvToBean = openCSVBuilder(CSV_PATH_NAME, className);
 
             Iterator<CSVStateCensus> csvStateIterator = csvToBean.iterator();
 
@@ -29,32 +23,21 @@ public class StateCensusAnalyser {
                 CSVStateCensus csvState = csvStateIterator.next();
                 count++;
             }
-
             if (expected == count)
                 return "HAPPY";
             else
                 return "SAD";
-        } catch (NoSuchFileException e) {
-            throw new StateCensusAnalyserException("Please Enter Valid File");
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            throw new StateCensusAnalyserException("delimiter", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
         } catch (RuntimeException e) {
             throw new StateCensusAnalyserException("Please Enter Valid File path", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
         }
-
-        return null;
     }
 
-    public static String findStateCodeCount(int expected) throws StateCensusAnalyserException {
+    public static String findStateCodeCount(int expected, String CSV_PATH_NAME, String className) throws StateCensusAnalyserException {
         try {
-            Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_STATE_CODE_PATH));
 
-            CsvToBean<CSVStateCode> csvToBean = new CsvToBeanBuilder(reader)
-                    .withType(CSVStateCode.class)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .build();
+            CsvToBean<CSVStateCode> csvToBean = openCSVBuilder(CSV_PATH_NAME, className);
 
             Iterator<CSVStateCode> csvUserIterator = csvToBean.iterator();
 
@@ -66,17 +49,29 @@ public class StateCensusAnalyser {
                 return "HAPPY";
             else
                 return "SAD";
-        } catch (NoSuchFileException e) {
-            throw new StateCensusAnalyserException("Please Enter Valid File");
+        } catch (NullPointerException e) {
+            throw new StateCensusAnalyserException("delimiter", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
+        } catch (RuntimeException e) {
+            throw new StateCensusAnalyserException("Please Enter Valid File", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
+        }
+    }
+
+    public static <T> CsvToBean openCSVBuilder(String filename, String classname) {
+        CsvToBean<T> csvToBean;
+        try {
+            Class classTemp = Class.forName(classname);
+            Reader reader = Files.newBufferedReader(Paths.get(filename));
+            csvToBean = new CsvToBeanBuilder(reader)
+                    .withType(Class.forName(classname))
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+
+            return csvToBean;
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (NullPointerException e){
-            throw new StateCensusAnalyserException("delimiter", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
-        }
-        catch (RuntimeException e) {
-            throw new StateCensusAnalyserException("Please Enter Valid File", StateCensusAnalyserException.ExceptionType.NO_SUCH_FILE);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return null;
     }
-}
 }
