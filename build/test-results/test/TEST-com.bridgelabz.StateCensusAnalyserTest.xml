@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.bridgelabz.StateCensusAnalyserTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-12-03T17:42:10" hostname="admin141-desktop" time="0.422">
+<testsuite name="com.bridgelabz.StateCensusAnalyserTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-12-03T18:23:43" hostname="admin141-desktop" time="0.419">
   <properties/>
-  <testcase name="givenTheStatesCSV_fileCheckToEnsure_TheNumberOfRecord_matches_R2" classname="com.bridgelabz.StateCensusAnalyserTest" time="0.422"/>
+  <testcase name="givenTheStatesCSV_fileCheckToEnsure_TheNumberOfRecord_matches_R2" classname="com.bridgelabz.StateCensusAnalyserTest" time="0.419"/>
   <system-out><![CDATA[SrNo : 35
 State : Uttar Pradesh
 TIN : 09
